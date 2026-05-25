@@ -378,7 +378,7 @@ export function Hero() {
                 style={{ width: `${Math.round(loadProgress * 100)}%` }}
               />
             </div>
-            {loadProgress < 0.05 ? (
+            {!loaded ? (
               <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
                 Loading Mark LXXXV &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
               </p>
