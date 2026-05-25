@@ -270,7 +270,7 @@ export function SuitsPage() {
       />
 
       {/* ── Navbar ── */}
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-black/60 backdrop-blur-2xl">
+      <header className="fixed inset-x-0 top-0 z-[60] border-b border-white/10 bg-black/60 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 md:px-8">
           <Link
             href="/"
@@ -309,7 +309,7 @@ export function SuitsPage() {
         <button
           onClick={prev}
           aria-label="Previous suit"
-          className="group fixed left-4 top-1/2 z-30 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-200 hover:border-accent/40 hover:bg-white/10 md:left-6"
+          className="group fixed left-4 top-1/2 z-[60] -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-200 hover:border-accent/40 hover:bg-white/10 md:left-6"
         >
           <ArrowLeft
             size={18}
@@ -322,7 +322,7 @@ export function SuitsPage() {
         <button
           onClick={next}
           aria-label="Next suit"
-          className="group fixed right-4 top-1/2 z-30 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-200 hover:border-accent/40 hover:bg-white/10 md:right-6"
+          className="group fixed right-4 top-1/2 z-[60] -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-200 hover:border-accent/40 hover:bg-white/10 md:right-6"
         >
           <ArrowRight
             size={18}
