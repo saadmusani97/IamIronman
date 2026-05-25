@@ -21,7 +21,16 @@ export function Hero() {
 
   const [loadProgress, setLoadProgress] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [engaged, setEngaged] = useState(false);
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
+
+  // Remove the old useEffect that auto-played on loaded
+  const handleEngage = () => {
+    setEngaged(true);
+    const audio = new Audio("/jarvis-intro.mp3");
+    audio.volume = 0.8;
+    audio.play().catch(() => {});
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -345,7 +354,7 @@ export function Hero() {
           })}
         </div>
 
-        {!loaded && (
+        {(!loaded || !engaged) && (
           <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-5 bg-background px-6">
             <EyebrowBadge>SUIT UP PROTOCOL // BOOTING</EyebrowBadge>
             <div className="h-px w-60 bg-white/10 md:w-80">
@@ -354,9 +363,27 @@ export function Hero() {
                 style={{ width: `${Math.round(loadProgress * 100)}%` }}
               />
             </div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
-              Loading Mark LXXXV &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
-            </p>
+            {!loaded ? (
+              <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
+                Loading Mark LXXXV &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
+              </p>
+            ) : (
+              <div className="flex flex-col items-center gap-4">
+                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
+                  Systems Online &nbsp;&middot;&nbsp; J.A.R.V.I.S. Standing By
+                </p>
+                <button
+                  onClick={handleEngage}
+                  className="group relative inline-flex items-center gap-3 rounded-full border border-accent/40 bg-accent/10 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.28em] text-accent backdrop-blur-md transition-all duration-300 hover:bg-accent/20 hover:border-accent/70 hover:shadow-[0_0_30px_rgba(212,162,47,0.25)]"
+                >
+                  <span
+                    aria-hidden
+                    className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(212,162,47,0.9)] animate-pulse"
+                  />
+                  Engage J.A.R.V.I.S.
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

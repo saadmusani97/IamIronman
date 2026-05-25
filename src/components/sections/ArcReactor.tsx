@@ -73,6 +73,19 @@ export function ArcReactor() {
   const progressFillRef = useRef<HTMLDivElement>(null);
   const tickingRef = useRef(false);
   const scrollProgress = useRef(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioPlayedRef = useRef(false); // play once per reveal
+
+  useEffect(() => {
+    const audio = new Audio("/arc-reactor.mp3");
+    audio.volume = 0.7;
+    audio.loop = false;
+    audioRef.current = audio;
+    return () => {
+      audio.pause();
+      audioRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -116,6 +129,22 @@ export function ArcReactor() {
         // ── Progress bar
         if (progressFillRef.current) {
           progressFillRef.current.style.transform = `scaleX(${progress})`;
+        }
+
+        // ── Audio: trigger once when model starts appearing
+        if (audioRef.current) {
+          if (progress >= 0.38 && !audioPlayedRef.current) {
+            audioPlayedRef.current = true;
+            audioRef.current.currentTime = 0;
+            audioRef.current.play().catch(() => {});
+          }
+          // Fade volume out as user scrolls away (progress > 0.85)
+          const vol = Math.min(1, Math.max(0, 1 - (progress - 0.85) / 0.1));
+          audioRef.current.volume = vol * 0.7;
+          // Reset so it can play again if user scrolls back up
+          if (progress < 0.3) {
+            audioPlayedRef.current = false;
+          }
         }
       });
     };
