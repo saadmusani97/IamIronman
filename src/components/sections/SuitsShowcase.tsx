@@ -9,7 +9,7 @@ import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 
 // ─── Suit data ────────────────────────────────────────────────────────────────
 
-const BASE = "/api/model";
+const BASE = "https://saadmusani97.github.io/ironman-assets";
 
 const SUITS = [
   {
