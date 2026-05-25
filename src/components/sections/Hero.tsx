@@ -34,30 +34,34 @@ export function Hero() {
   useEffect(() => {
     let cancelled = false;
     let loadedCount = 0;
-    const imgs: HTMLImageElement[] = [];
+    const imgs: HTMLImageElement[] = new Array(FRAME_COUNT);
 
+    // Load all frames in parallel — browser handles concurrency
     for (let i = 1; i <= FRAME_COUNT; i++) {
       const img = new Image();
+      img.decoding = "async";
       img.src = framePath(i);
-      img.onload = () => {
+      const idx = i - 1;
+      const onDone = () => {
         if (cancelled) return;
         loadedCount++;
-        setLoadProgress(loadedCount / FRAME_COUNT);
+        const progress = loadedCount / FRAME_COUNT;
+        setLoadProgress(progress);
         if (loadedCount === FRAME_COUNT) {
           loadedRef.current = true;
           setLoaded(true);
         }
-      };
-      img.onerror = () => {
-        if (cancelled) return;
-        loadedCount++;
-        setLoadProgress(loadedCount / FRAME_COUNT);
-        if (loadedCount === FRAME_COUNT) {
-          loadedRef.current = true;
-          setLoaded(true);
+        // Draw first frame immediately when it loads
+        if (i === 1) {
+          imgs[idx] = img;
+          framesRef.current = imgs;
+          drawFrame(0);
+          lastFrameRef.current = 0;
         }
       };
-      imgs.push(img);
+      img.onload = onDone;
+      img.onerror = onDone;
+      imgs[idx] = img;
     }
     framesRef.current = imgs;
 
@@ -362,9 +366,9 @@ export function Hero() {
                 style={{ width: `${Math.round(loadProgress * 100)}%` }}
               />
             </div>
-            {loadProgress < 0.1 ? (
+            {loadProgress === 0 ? (
               <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
-                Loading Mark LXXXV &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
+                Initialising J.A.R.V.I.S. &nbsp;&middot;&nbsp; Stand by
               </p>
             ) : (
               <div className="flex flex-col items-center gap-4">

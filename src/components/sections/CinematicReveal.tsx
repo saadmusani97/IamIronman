@@ -27,12 +27,14 @@ export function CinematicReveal() {
   useEffect(() => {
     let cancelled = false;
     let loadedCount = 0;
-    const imgs: HTMLImageElement[] = [];
+    const imgs: HTMLImageElement[] = new Array(CINE_FRAME_COUNT);
 
     for (let i = 1; i <= CINE_FRAME_COUNT; i++) {
       const img = new Image();
+      img.decoding = "async";
       img.src = cineFramePath(i);
-      img.onload = () => {
+      const idx = i - 1;
+      const onDone = () => {
         if (cancelled) return;
         loadedCount++;
         setLoadProgress(loadedCount / CINE_FRAME_COUNT);
@@ -41,16 +43,9 @@ export function CinematicReveal() {
           setLoaded(true);
         }
       };
-      img.onerror = () => {
-        if (cancelled) return;
-        loadedCount++;
-        setLoadProgress(loadedCount / CINE_FRAME_COUNT);
-        if (loadedCount === CINE_FRAME_COUNT) {
-          loadedRef.current = true;
-          setLoaded(true);
-        }
-      };
-      imgs.push(img);
+      img.onload = onDone;
+      img.onerror = onDone;
+      imgs[idx] = img;
     }
     framesRef.current = imgs;
 
