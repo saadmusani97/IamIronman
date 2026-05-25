@@ -10,7 +10,7 @@ import { HudFrame } from "@/components/ui/HudFrame";
 
 // ─── Suit data ────────────────────────────────────────────────────────────────
 
-const BASE = "https://github.com/saadmusani97/IamIronman/releases/download/3d_assets";
+const BASE = "";
 
 const SUITS = [
   {

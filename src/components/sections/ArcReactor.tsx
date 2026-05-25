@@ -10,7 +10,7 @@ import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 // ─── 3-D Model ────────────────────────────────────────────────────────────────
 
 function ArcReactorModel({ scrollProgress }: { scrollProgress: React.MutableRefObject<number> }) {
-  const { scene } = useGLTF("https://github.com/saadmusani97/IamIronman/releases/download/3d_assets/arc-reactor.glb");
+  const { scene } = useGLTF("/arc-reactor.glb");
   const groupRef = useRef<THREE.Group>(null);
 
   // Auto-fit: compute bounding box once and normalise the model to radius ~1
