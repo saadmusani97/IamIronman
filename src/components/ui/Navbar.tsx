@@ -47,6 +47,9 @@ export function Navbar() {
           >
             Archive
           </a>
+          <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-zinc-600">
+            Made by <span className="text-zinc-500">Saad Musani</span>
+          </span>
         </nav>
 
         <a
