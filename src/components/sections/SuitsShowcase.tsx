@@ -9,10 +9,12 @@ import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 
 // ─── Suit data ────────────────────────────────────────────────────────────────
 
+const BASE = "https://github.com/saadmusani97/IamIronman/releases/download/3d_assets";
+
 const SUITS = [
   {
     id: "mark1",
-    file: "/suit-mark1.glb",
+    file: `${BASE}/suit-mark1.glb`,
     number: "Mark I",
     name: "The Cave Suit",
     year: "2008",
@@ -23,7 +25,7 @@ const SUITS = [
   },
   {
     id: "mark6",
-    file: "/suit-mark6.glb",
+    file: `${BASE}/suit-mark6.glb`,
     number: "Mark VI",
     name: "The Reactor Upgrade",
     year: "2010",
@@ -34,7 +36,7 @@ const SUITS = [
   },
   {
     id: "mark7",
-    file: "/suit-mark7.glb",
+    file: `${BASE}/suit-mark7.glb`,
     number: "Mark VII",
     name: "The Avengers Suit",
     year: "2012",
@@ -45,7 +47,7 @@ const SUITS = [
   },
   {
     id: "mark50",
-    file: "/suit-mark50.glb",
+    file: `${BASE}/suit-mark50.glb`,
     number: "Mark L",
     name: "Nanotech Suit",
     year: "2018",
@@ -56,7 +58,7 @@ const SUITS = [
   },
   {
     id: "hulkbuster",
-    file: "/suit-hulkbuster.glb",
+    file: `${BASE}/suit-hulkbuster.glb`,
     number: "Mark XLIV",
     name: "Hulkbuster",
     year: "2015",
@@ -67,7 +69,7 @@ const SUITS = [
   },
   {
     id: "mark85",
-    file: "/suit-mark85.glb",
+    file: `${BASE}/suit-mark85.glb`,
     number: "Mark LXXXV",
     name: "The Final Suit",
     year: "2023",
