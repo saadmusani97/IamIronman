@@ -34,7 +34,21 @@ export function Hero() {
   useEffect(() => {
     let cancelled = false;
     let loadedCount = 0;
+    const TOTAL = FRAME_COUNT + 169; // hero + cinematic frames
     const imgs: HTMLImageElement[] = new Array(FRAME_COUNT);
+
+    // Preload cinematic frames in parallel too
+    for (let i = 1; i <= 169; i++) {
+      const img = new Image();
+      img.decoding = "async";
+      img.src = `/frames2/frame_${String(i).padStart(4, "0")}.jpg`;
+      img.onload = img.onerror = () => {
+        if (cancelled) return;
+        loadedCount++;
+        setLoadProgress(loadedCount / TOTAL);
+        if (loadedCount === TOTAL) { loadedRef.current = true; setLoaded(true); }
+      };
+    }
 
     // Load all frames in parallel — browser handles concurrency
     for (let i = 1; i <= FRAME_COUNT; i++) {
@@ -45,13 +59,11 @@ export function Hero() {
       const onDone = () => {
         if (cancelled) return;
         loadedCount++;
-        const progress = loadedCount / FRAME_COUNT;
-        setLoadProgress(progress);
-        if (loadedCount === FRAME_COUNT) {
+        setLoadProgress(loadedCount / TOTAL);
+        if (loadedCount === TOTAL) {
           loadedRef.current = true;
           setLoaded(true);
         }
-        // Draw first frame immediately when it loads
         if (i === 1) {
           imgs[idx] = img;
           framesRef.current = imgs;
@@ -359,23 +371,34 @@ export function Hero() {
 
         {(!engaged) && (
           <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-5 bg-background px-6">
-            <EyebrowBadge>STARK INDUSTRIES // MARK LXXXV</EyebrowBadge>
-            <h1 className="font-sans text-4xl font-semibold leading-[0.95] tracking-tighter text-foreground md:text-6xl">
-              I am <span className="text-accent">Iron Man.</span>
-            </h1>
-            <button
-              onClick={handleEngage}
-              className="group relative inline-flex items-center gap-3 rounded-full border border-accent/40 bg-accent/10 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.28em] text-accent backdrop-blur-md transition-all duration-300 hover:bg-accent/20 hover:border-accent/70 hover:shadow-[0_0_30px_rgba(212,162,47,0.25)]"
-            >
-              <span
-                aria-hidden
-                className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(212,162,47,0.9)] animate-pulse"
+            <EyebrowBadge>SUIT UP PROTOCOL // BOOTING</EyebrowBadge>
+            <div className="h-px w-60 bg-white/10 md:w-80">
+              <div
+                className="h-full bg-accent transition-[width] duration-150 ease-out"
+                style={{ width: `${Math.round(loadProgress * 100)}%` }}
               />
-              Engage J.A.R.V.I.S.
-            </button>
-            <p className="font-mono text-[9px] uppercase tracking-[0.28em] text-zinc-600">
-              Arc Reactor Online &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}% Loaded
-            </p>
+            </div>
+            {!loaded ? (
+              <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
+                Loading Mark LXXXV &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
+              </p>
+            ) : (
+              <div className="flex flex-col items-center gap-4">
+                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
+                  Systems Online &nbsp;&middot;&nbsp; J.A.R.V.I.S. Standing By
+                </p>
+                <button
+                  onClick={handleEngage}
+                  className="group relative inline-flex items-center gap-3 rounded-full border border-accent/40 bg-accent/10 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.28em] text-accent backdrop-blur-md transition-all duration-300 hover:bg-accent/20 hover:border-accent/70 hover:shadow-[0_0_30px_rgba(212,162,47,0.25)]"
+                >
+                  <span
+                    aria-hidden
+                    className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(212,162,47,0.9)] animate-pulse"
+                  />
+                  Engage J.A.R.V.I.S.
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
