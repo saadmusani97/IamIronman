@@ -13,6 +13,8 @@ const ALLOWED = new Set([
   "suit-mark85.glb",
 ]);
 
+export const maxDuration = 60;
+
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ file: string }> }
@@ -23,10 +25,28 @@ export async function GET(
     return new NextResponse("Not found", { status: 404 });
   }
 
-  // Redirect browser directly to the GitHub objects CDN
-  // GitHub releases redirect to objects.githubusercontent.com which has CORS headers
-  return NextResponse.redirect(
-    `${RELEASE_BASE}/${file}`,
-    { status: 302 }
-  );
+  // Fetch from GitHub releases — follows redirects automatically
+  const upstream = await fetch(`${RELEASE_BASE}/${file}`, {
+    redirect: "follow",
+    headers: {
+      "User-Agent": "Mozilla/5.0",
+    },
+  });
+
+  if (!upstream.ok || !upstream.body) {
+    return new NextResponse("Failed to fetch model", { status: 502 });
+  }
+
+  // Stream the response body directly — no buffering, no size limit
+  return new NextResponse(upstream.body, {
+    status: 200,
+    headers: {
+      "Content-Type": "model/gltf-binary",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "Access-Control-Allow-Origin": "*",
+      ...(upstream.headers.get("content-length")
+        ? { "Content-Length": upstream.headers.get("content-length")! }
+        : {}),
+    },
+  });
 }
