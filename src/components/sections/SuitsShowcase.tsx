@@ -9,7 +9,7 @@ import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 
 // ─── Suit data ────────────────────────────────────────────────────────────────
 
-const BASE = "";
+const BASE = "/api/model";
 
 const SUITS = [
   {

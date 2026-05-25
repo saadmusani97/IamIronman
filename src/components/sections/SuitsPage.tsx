@@ -10,7 +10,7 @@ import { HudFrame } from "@/components/ui/HudFrame";
 
 // ─── Suit data ────────────────────────────────────────────────────────────────
 
-const BASE = "";
+const BASE = "/api/model";
 
 const SUITS = [
   {
