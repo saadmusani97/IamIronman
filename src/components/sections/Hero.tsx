@@ -359,34 +359,23 @@ export function Hero() {
 
         {(!engaged) && (
           <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-5 bg-background px-6">
-            <EyebrowBadge>SUIT UP PROTOCOL // BOOTING</EyebrowBadge>
-            <div className="h-px w-60 bg-white/10 md:w-80">
-              <div
-                className="h-full bg-accent transition-[width] duration-150 ease-out"
-                style={{ width: `${Math.round(loadProgress * 100)}%` }}
+            <EyebrowBadge>STARK INDUSTRIES // MARK LXXXV</EyebrowBadge>
+            <h1 className="font-sans text-4xl font-semibold leading-[0.95] tracking-tighter text-foreground md:text-6xl">
+              I am <span className="text-accent">Iron Man.</span>
+            </h1>
+            <button
+              onClick={handleEngage}
+              className="group relative inline-flex items-center gap-3 rounded-full border border-accent/40 bg-accent/10 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.28em] text-accent backdrop-blur-md transition-all duration-300 hover:bg-accent/20 hover:border-accent/70 hover:shadow-[0_0_30px_rgba(212,162,47,0.25)]"
+            >
+              <span
+                aria-hidden
+                className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(212,162,47,0.9)] animate-pulse"
               />
-            </div>
-            {loadProgress === 0 ? (
-              <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
-                Initialising J.A.R.V.I.S. &nbsp;&middot;&nbsp; Stand by
-              </p>
-            ) : (
-              <div className="flex flex-col items-center gap-4">
-                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
-                  Systems Online &nbsp;&middot;&nbsp; J.A.R.V.I.S. Standing By
-                </p>
-                <button
-                  onClick={handleEngage}
-                  className="group relative inline-flex items-center gap-3 rounded-full border border-accent/40 bg-accent/10 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.28em] text-accent backdrop-blur-md transition-all duration-300 hover:bg-accent/20 hover:border-accent/70 hover:shadow-[0_0_30px_rgba(212,162,47,0.25)]"
-                >
-                  <span
-                    aria-hidden
-                    className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(212,162,47,0.9)] animate-pulse"
-                  />
-                  Engage J.A.R.V.I.S.
-                </button>
-              </div>
-            )}
+              Engage J.A.R.V.I.S.
+            </button>
+            <p className="font-mono text-[9px] uppercase tracking-[0.28em] text-zinc-600">
+              Arc Reactor Online &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}% Loaded
+            </p>
           </div>
         )}
       </div>
