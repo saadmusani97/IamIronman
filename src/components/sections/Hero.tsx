@@ -24,7 +24,6 @@ export function Hero() {
   const [engaged, setEngaged] = useState(false);
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
 
-  // Remove the old useEffect that auto-played on loaded
   const handleEngage = () => {
     setEngaged(true);
     const audio = new Audio("/jarvis-intro.mp3");
@@ -354,7 +353,7 @@ export function Hero() {
           })}
         </div>
 
-        {(!loaded || !engaged) && (
+        {(!engaged) && (
           <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-5 bg-background px-6">
             <EyebrowBadge>SUIT UP PROTOCOL // BOOTING</EyebrowBadge>
             <div className="h-px w-60 bg-white/10 md:w-80">
@@ -363,7 +362,7 @@ export function Hero() {
                 style={{ width: `${Math.round(loadProgress * 100)}%` }}
               />
             </div>
-            {!loaded ? (
+            {loadProgress < 0.1 ? (
               <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
                 Loading Mark LXXXV &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
               </p>
