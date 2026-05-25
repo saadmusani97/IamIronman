@@ -7,6 +7,9 @@ import * as THREE from "three";
 import { HudFrame } from "@/components/ui/HudFrame";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 
+// Configure Draco decoder for compressed GLBs
+useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
+
 // ─── Suit data ────────────────────────────────────────────────────────────────
 
 const BASE = "https://saadmusani97.github.io/ironman-assets";

@@ -8,6 +8,9 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { HudFrame } from "@/components/ui/HudFrame";
 
+// Configure Draco decoder for compressed GLBs
+useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
+
 // ─── Suit data ────────────────────────────────────────────────────────────────
 
 const BASE = "https://saadmusani97.github.io/ironman-assets";
