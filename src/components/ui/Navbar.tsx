@@ -41,6 +41,12 @@ export function Navbar() {
           >
             Systems
           </a>
+          <Link
+            href="/suits"
+            className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-400 transition-colors hover:text-foreground"
+          >
+            Suits
+          </Link>
           <a
             href="#footer"
             className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-400 transition-colors hover:text-foreground"
