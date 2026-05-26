@@ -259,18 +259,47 @@ export function SuitsPage() {
   const suit = SUITS[activeIndex];
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-background text-foreground">
+    <div className="relative min-h-screen w-full overflow-hidden text-foreground">
+
+      {/* ── Hall of Armor background ── */}
+      <div
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: "url('/hall-of-armor.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center bottom",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+
+      {/* ── Dark overlay ── */}
+      <div
+        className="pointer-events-none fixed inset-0 z-[1]"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(10,10,11,0.82) 0%, rgba(10,10,11,0.45) 40%, rgba(10,10,11,0.6) 70%, rgba(10,10,11,0.9) 100%)",
+        }}
+      />
+
+      {/* ── Side vignettes ── */}
+      <div
+        className="pointer-events-none fixed inset-0 z-[1]"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(10,10,11,0.75) 0%, transparent 35%, transparent 65%, rgba(10,10,11,0.75) 100%)",
+        }}
+      />
+
+      {/* ── Suit color glow ── */}
+      <div
+        className="pointer-events-none fixed inset-0 z-[1] transition-all duration-700"
+        style={{
+          background: `radial-gradient(ellipse 50% 50% at 65% 60%, ${suit.color}15 0%, transparent 70%)`,
+        }}
+      />
 
       {/* ── Grain overlay ── */}
       <div className="grain pointer-events-none fixed inset-0 z-50" />
-
-      {/* ── Background glow ── */}
-      <div
-        className="pointer-events-none fixed inset-0 z-0 transition-all duration-700"
-        style={{
-          background: `radial-gradient(ellipse 60% 60% at 60% 50%, ${suit.color}18 0%, transparent 70%)`,
-        }}
-      />
 
       {/* ── Navbar ── */}
       <header className="fixed inset-x-0 top-0 z-[60] border-b border-white/10 bg-black/60 backdrop-blur-2xl">
@@ -402,7 +431,7 @@ export function SuitsPage() {
         {/* ── 3D Model ── */}
         <div
           key={`model-${animKey}`}
-          className="relative h-[55vw] w-full max-h-[600px] max-w-[600px] shrink-0 md:h-[80vh] md:w-[50vw]"
+          className="relative h-[55vw] w-full max-h-[650px] max-w-[580px] shrink-0 md:h-[80vh] md:w-[50vw]"
           style={{
             animation: `suitScaleIn 0.6s cubic-bezier(0.22,1,0.36,1) both`,
           }}

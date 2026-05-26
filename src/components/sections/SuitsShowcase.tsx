@@ -239,19 +239,39 @@ export function SuitsShowcase() {
     <section
       ref={sectionRef}
       id="suits"
-      className="relative border-t border-white/5 bg-background"
+      className="relative border-t border-white/5"
       style={{ height: `${SUITS.length * 100}vh` }}
     >
       <div
-        className="sticky top-0 overflow-hidden bg-background"
+        className="sticky top-0 overflow-hidden"
         style={{ height: "100dvh" }}
       >
-        {/* Vignette */}
+        {/* Hall of Armor background */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: "url('/hall-of-armor.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+
+        {/* Dark overlay to match site vibe */}
         <div
           className="pointer-events-none absolute inset-0 z-10"
           style={{
             background:
-              "radial-gradient(ellipse 90% 90% at 50% 50%, transparent 40%, rgba(10,10,11,0.5) 75%, rgba(10,10,11,0.92) 100%)",
+              "linear-gradient(to bottom, rgba(10,10,11,0.75) 0%, rgba(10,10,11,0.4) 40%, rgba(10,10,11,0.55) 70%, rgba(10,10,11,0.85) 100%)",
+          }}
+        />
+
+        {/* Side vignettes */}
+        <div
+          className="pointer-events-none absolute inset-0 z-10"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(10,10,11,0.7) 0%, transparent 30%, transparent 70%, rgba(10,10,11,0.7) 100%)",
           }}
         />
 
@@ -298,13 +318,13 @@ export function SuitsShowcase() {
           ))}
         </div>
 
-        {/* Layout: text left, canvas right */}
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center md:flex-row md:items-center md:justify-between md:px-16 lg:px-24">
+        {/* Layout: text left, canvas center-right on platform */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center md:flex-row md:items-end md:justify-between md:px-16 md:pb-24 lg:px-24">
 
           {/* Text — transitions on activeIndex change */}
           <div
             key={suit.id}
-            className="z-10 flex max-w-[44ch] animate-fadeSlideIn flex-col gap-5 px-6 pb-6 pt-24 text-center md:max-w-[38ch] md:px-0 md:pb-0 md:pt-0 md:text-left"
+            className="z-10 flex max-w-[44ch] animate-fadeSlideIn flex-col gap-5 px-6 pb-6 pt-24 text-center md:max-w-[36ch] md:px-0 md:pb-0 md:pt-0 md:text-left"
           >
             <div className="flex items-center justify-center gap-3 md:justify-start">
               <span className="inline-block h-px w-8" style={{ background: suit.color }} />
@@ -341,8 +361,8 @@ export function SuitsShowcase() {
             </div>
           </div>
 
-          {/* Single shared canvas */}
-          <div className="relative h-[45vw] w-full max-h-[480px] max-w-[480px] shrink-0 md:h-[55vh] md:w-[45vw]">
+          {/* Single shared canvas — centered on the platform */}
+          <div className="relative h-[55vw] w-full max-h-[580px] max-w-[520px] shrink-0 md:h-[65vh] md:w-[45vw]">
             <SuitsCanvas activeIndex={activeIndex} />
           </div>
         </div>
