@@ -4,8 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { HudFrame } from "@/components/ui/HudFrame";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { DOOM_FRAME_COUNT, doomFramePath } from "@/lib/doom";
+import Link from "next/link";
+import { ArrowLeft } from "@phosphor-icons/react";
 
-export function DoomReveal() {
+export function DoomReveal({ standalone = false }: { standalone?: boolean }) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const textRef = useRef<HTMLDivElement | null>(null);
@@ -164,7 +166,7 @@ export function DoomReveal() {
     <section
       ref={sectionRef}
       id="doom"
-      className="scroll-animation relative border-t border-white/5 bg-background"
+      className={`scroll-animation relative ${standalone ? "" : "border-t border-white/5"} bg-background`}
     >
       <div
         className="sticky top-0 min-h-[100dvh] w-full overflow-hidden bg-black"
@@ -184,6 +186,19 @@ export function DoomReveal() {
               "radial-gradient(120% 80% at 50% 90%, transparent 30%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.85) 100%)",
           }}
         />
+
+        {/* Back button — only in standalone mode */}
+        {standalone && (
+          <div className="absolute left-6 top-5 z-20 md:left-10">
+            <Link
+              href="/"
+              className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.32em] text-zinc-400 transition-colors hover:text-green-400"
+            >
+              <ArrowLeft size={12} weight="bold" />
+              Back
+            </Link>
+          </div>
+        )}
 
         {/* HUD corners — green for Doom */}
         <div className="pointer-events-none absolute left-6 top-24 md:left-10 md:top-28" style={{ color: "#2d6a2d" }}>
@@ -223,20 +238,15 @@ export function DoomReveal() {
           />
         </div>
 
-        {/* Intro text */}
+        {/* Intro text — minimal, no "Doom is inevitable" */}
         <div
           ref={textRef}
-          className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-start gap-5 px-6 pb-24 md:px-12 md:pb-28"
+          className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-start gap-3 px-6 pb-24 md:px-12 md:pb-28"
           style={{ transition: "opacity 80ms linear, transform 80ms linear" }}
         >
           <EyebrowBadge>DOOM // LATVERIA // SOVEREIGN</EyebrowBadge>
-          <h2 className="max-w-[14ch] font-sans text-5xl font-semibold leading-[0.95] tracking-tighter text-foreground md:text-7xl lg:text-8xl">
-            Doom
-            <br />
-            <span style={{ color: "#2d6a2d" }}>is inevitable.</span>
-          </h2>
           <p className="max-w-[42ch] font-sans text-sm leading-relaxed text-zinc-400 md:text-base">
-            Victor Von Doom. Sorcerer. Scientist. Sovereign. The most dangerous man alive — and the only one who knows it.
+            Victor Von Doom. Sorcerer. Scientist. Sovereign.
           </p>
         </div>
 

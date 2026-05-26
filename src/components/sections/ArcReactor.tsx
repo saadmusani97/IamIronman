@@ -7,6 +7,8 @@ import * as THREE from "three";
 import { HudFrame } from "@/components/ui/HudFrame";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 
+import { RippleGrid } from "@/components/ui/RippleGrid";
+
 // Configure Draco decoder for compressed GLBs
 useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
 
@@ -72,12 +74,13 @@ export function ArcReactor() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const canvasWrapRef = useRef<HTMLDivElement>(null);
+  const rippleGridRef = useRef<HTMLDivElement>(null);
   const hudRef = useRef<HTMLDivElement>(null);
   const progressFillRef = useRef<HTMLDivElement>(null);
   const tickingRef = useRef(false);
   const scrollProgress = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const audioPlayedRef = useRef(false); // play once per reveal
+  const audioPlayedRef = useRef(false);
 
   useEffect(() => {
     const audio = new Audio("/arc-reactor.mp3");
@@ -121,6 +124,12 @@ export function ArcReactor() {
         if (canvasWrapRef.current) {
           const op = Math.min(1, Math.max(0, (progress - 0.38) / 0.22));
           canvasWrapRef.current.style.opacity = String(op);
+        }
+
+        // ── RippleGrid: same timing as canvas
+        if (rippleGridRef.current) {
+          const op = Math.min(1, Math.max(0, (progress - 0.38) / 0.22));
+          rippleGridRef.current.style.opacity = String(op);
         }
 
         // ── HUD overlay: same timing as canvas
@@ -167,6 +176,25 @@ export function ArcReactor() {
         className="sticky top-0 min-h-[100dvh] w-full overflow-hidden bg-background"
         style={{ height: "100dvh", willChange: "transform", transform: "translateZ(0)" }}
       >
+        {/* ── RippleGrid background ── */}
+        <div
+          ref={rippleGridRef}
+          className="absolute inset-0 z-0"
+          style={{ opacity: 0, transition: "opacity 80ms linear" }}
+        >
+          <RippleGrid
+            gridColor="#9d2828"
+            rippleIntensity={0.07}
+            gridSize={10}
+            gridThickness={16}
+            fadeDistance={4.1}
+            vignetteStrength={2}
+            glowIntensity={1}
+            opacity={1}
+            gridRotation={0}
+          />
+        </div>
+
         {/* ── Radial vignette ── */}
         <div
           className="pointer-events-none absolute inset-0 z-10"

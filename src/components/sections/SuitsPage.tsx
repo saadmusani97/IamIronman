@@ -179,7 +179,7 @@ function SuitsCanvas({ activeIndex }: { activeIndex: number }) {
   const suit = SUITS[activeIndex];
   return (
     <Canvas
-      camera={{ position: [0, 0.3, 3.8], fov: 45 }}
+      camera={{ position: [0, 1.2, 4.5], fov: 38 }}
       gl={{ antialias: true, alpha: true }}
       style={{ background: "transparent", width: "100%", height: "100%" }}
     >
@@ -335,7 +335,7 @@ export function SuitsPage() {
       </div>
 
       {/* ── Main layout ── */}
-      <main className="relative z-10 flex min-h-screen flex-col items-center justify-center pt-20 md:flex-row md:items-center md:justify-center md:gap-0">
+      <main className="relative z-10 flex min-h-screen flex-col items-end justify-end pb-12 pt-20 md:flex-row md:items-end md:justify-between md:px-16 md:pb-16 lg:px-24">
 
         {/* Left arrow */}
         <button
@@ -431,8 +431,11 @@ export function SuitsPage() {
         {/* ── 3D Model ── */}
         <div
           key={`model-${animKey}`}
-          className="relative h-[55vw] w-full max-h-[650px] max-w-[580px] shrink-0 md:h-[80vh] md:w-[50vw]"
+          className="relative shrink-0"
           style={{
+            width: "min(48vw, 520px)",
+            height: "min(80vh, 720px)",
+            marginBottom: "-2vh",
             animation: `suitScaleIn 0.6s cubic-bezier(0.22,1,0.36,1) both`,
           }}
         >

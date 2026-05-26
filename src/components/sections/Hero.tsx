@@ -34,21 +34,8 @@ export function Hero() {
   useEffect(() => {
     let cancelled = false;
     let loadedCount = 0;
-    const TOTAL = FRAME_COUNT + 169 + 81; // hero + cinematic + doom frames
+    const TOTAL = FRAME_COUNT + 169; // hero + cinematic frames
     const imgs: HTMLImageElement[] = new Array(FRAME_COUNT);
-
-    // Preload doom frames in parallel too
-    for (let i = 1; i <= 81; i++) {
-      const img = new Image();
-      img.decoding = "async";
-      img.src = `/frames3/frame_${String(i).padStart(4, "0")}.jpg`;
-      img.onload = img.onerror = () => {
-        if (cancelled) return;
-        loadedCount++;
-        setLoadProgress(loadedCount / TOTAL);
-        if (loadedCount === TOTAL) { loadedRef.current = true; setLoaded(true); }
-      };
-    }
 
     // Preload cinematic frames in parallel too
     for (let i = 1; i <= 169; i++) {

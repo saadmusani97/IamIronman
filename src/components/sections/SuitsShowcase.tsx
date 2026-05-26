@@ -152,7 +152,7 @@ function SuitsCanvas({
 
   return (
     <Canvas
-      camera={{ position: [0, 0.5, 3.5], fov: 42 }}
+      camera={{ position: [0, 1.2, 4.5], fov: 38 }}
       gl={{ antialias: true, alpha: true }}
       style={{ background: "transparent", width: "100%", height: "100%" }}
     >
@@ -318,13 +318,13 @@ export function SuitsShowcase() {
           ))}
         </div>
 
-        {/* Layout: text left, canvas center-right on platform */}
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center md:flex-row md:items-end md:justify-between md:px-16 md:pb-24 lg:px-24">
+        {/* Layout: text left, canvas centered on platform */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-8 md:flex-row md:items-end md:justify-between md:px-16 md:pb-16 lg:px-24">
 
-          {/* Text — transitions on activeIndex change */}
+          {/* Text */}
           <div
             key={suit.id}
-            className="z-10 flex max-w-[44ch] animate-fadeSlideIn flex-col gap-5 px-6 pb-6 pt-24 text-center md:max-w-[36ch] md:px-0 md:pb-0 md:pt-0 md:text-left"
+            className="z-10 flex max-w-[44ch] animate-fadeSlideIn flex-col gap-5 px-6 pb-6 text-center md:max-w-[36ch] md:px-0 md:pb-0 md:text-left"
           >
             <div className="flex items-center justify-center gap-3 md:justify-start">
               <span className="inline-block h-px w-8" style={{ background: suit.color }} />
@@ -361,8 +361,14 @@ export function SuitsShowcase() {
             </div>
           </div>
 
-          {/* Single shared canvas — centered on the platform */}
-          <div className="relative h-[55vw] w-full max-h-[580px] max-w-[520px] shrink-0 md:h-[65vh] md:w-[45vw]">
+          {/* Canvas — centered on the circular platform */}
+          <div className="relative shrink-0"
+            style={{
+              width: "min(45vw, 480px)",
+              height: "min(75vh, 680px)",
+              marginBottom: "-2vh",
+            }}
+          >
             <SuitsCanvas activeIndex={activeIndex} />
           </div>
         </div>
